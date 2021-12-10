@@ -40,13 +40,10 @@ services:
                 - PUT
                 - DELETE
                 - HEAD
-  website-starter:
-    component: website
+  remix-static:
+    component: oss
     props:
       bucket: 'remix-public' #oss存储桶的名称
-      src:
-        publishDir: ./public #要上传的文件夹
-        index: index.html
       region: cn-hangzhou
-      hosts:
-        - host: auto
+      codeUri: ./public #要上传的文件夹
+      acl: public-read
