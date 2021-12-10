@@ -19,7 +19,7 @@ npm i
 
 设置`s.yaml`文件最下方`bucket` oss存储桶的名称(默认为remix-public)
 
-![修改s.yaml文件](./md/Xnip2021-12-10_15-12-30.jpg)
+![修改s.yaml文件](./md/Xnip2021-12-10_17-48-52.jpg)
 
 编辑`remix.config.js`文件中的`publicPath`位置，设置为oss存储桶的地址
 ![存储桶地址](./md/1639120149181.jpg)
