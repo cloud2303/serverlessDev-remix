@@ -1,0 +1,15 @@
+{
+  "name": "remix-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "npx remix setup",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "remix-aliyunhttp": "^0.1.4"
+  }
+}
