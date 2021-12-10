@@ -6,6 +6,13 @@
 
 示例网站 [ali.jiahuiblog.com](http://ali.jiahuiblog.com)
 
+## 开发
+
+```
+cd src
+npm i
+```
+
 ## 发布
 
 ### 配置oss对象存储桶
