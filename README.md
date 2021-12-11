@@ -2,7 +2,7 @@
 
 - [Remix Docs](https://remix.run/docs)
 
-## 使用阿里云FC函数计算+oss存储桶实现remix全栈应用！！！！
+## 使用阿里云FC函数计算+oss存储桶部署remix全栈应用！！！！
 
 示例网站 [ali.jiahuiblog.com](http://ali.jiahuiblog.com)
 
