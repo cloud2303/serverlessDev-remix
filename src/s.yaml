@@ -7,7 +7,7 @@ vars: # [全局变量，提供给各个服务使用]
   region: cn-hangzhou
   fc:
     name: remix-server #函数的名字
-    baseUrl: https://${vars.accountID}.cn-hangzhou.fc.aliyuncs.com/2016-08-15/proxy/remix-fc.LATEST/remix-server/ #函数计算触发器地址，可以在部署好函数之后获得。例子 https://<accountID>.cn-hongkong.fc.aliyuncs.com/2016-08-15/proxy/serverlesshub/serverlesshub/
+    baseUrl: https://${vars.accountID}.cn-hangzhou.fc.aliyuncs.com/2016-08-15/proxy/remix-fc.LATEST/${vars.fc.name}/ #函数计算触发器地址，可以在部署好函数之后获得。例子 https://<accountID>.cn-hongkong.fc.aliyuncs.com/2016-08-15/proxy/serverlesshub/serverlesshub/
   oss:
     bucketName: remix-static  #oss存储桶的名称确保唯一
     baseUrl: https://${vars.oss.bucketName}.oss-cn-hangzhou.aliyuncs.com  # oss 公网访问地址 。例子： https://<bucketname>.oss-cn-hangzhou.aliyuncs.com
