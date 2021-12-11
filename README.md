@@ -10,32 +10,52 @@
 
 ```
 cd src
+
 npm i
+
+构建
+
+npm run build
+
 ```
 
 ## 发布
 
-### 修改你要部署的静态文件夹public的路径:
+安装serverless Devs
+```
+npm install -g @serverless-devs/s
 
-设置`s.yaml`文件最下方`bucket` oss存储桶的名称(默认为remix-public)
-
-![修改s.yaml文件](./md/Xnip2021-12-10_17-48-52.jpg)
-
-编辑`remix.config.js`文件中的`publicPath`位置，设置为oss存储桶的地址
-![存储桶地址](./md/1639120149181.jpg)
-
-接着进行构建命令
-
-```sh
-npm run build
+添加阿里云账号
+s config add
 ```
 
-然后执行发布命令
+补充s.yaml文件信息
+![](md/Xnip2021-12-11_17-29-32.jpg)
+
+必填accountID和bucketName，注意bucketName名字要唯一
+
+
+然后执行部署命令，可以看到gateway临时的二级域名(我这里没有添加自定义域名。注意，这个临时的二级域名不可以访问，需要绑定自定义域名)
 
 ```sh
 s deploy
 ```
+![](md/Xnip2021-12-11_16-47-15.jpg)
 
-查看并复制命令行的测试域名地址，即可访问部署好的应用
-![命令行中测试的域名地址](md/Xnip2021-12-10_16-45-39.jpg)
+绑定自定义域名
+
+将刚才的gateway下的domain复制一下，添加cname解析，比如我这里使用DNSPOD将`tes.jiahuiblog.com`解析到`7a*****`这个域名上面
+![](md/Xnip2021-12-11_16-53-00.jpg)
+然后在apigateway页面找到remix分组绑定咱们解析的域名
+![](md/Xnip2021-12-11_16-55-31.jpg)
+![](md/Xnip2021-12-11_16-56-16.jpg)
+如果解析成功了，就会提示绑定成功,如果你是共享示例(一般都是),请看注意事项，按注意事项的操作了之后就可以访问了
+![](md/Xnip2021-12-11_16-56-59.jpg)
+## 注意事项
+1. 如果你是共享实例,请在oss存储桶那边添加你的自定义域名(比如我绑定apigateway的域名为test.jiahuiblog.com,那就把这个域名直接添加到这个存储桶这里就好了)，不需要进行cname解析，不进行这一步操作就会无法访问静态资源。
+![](md/Xnip2021-12-11_16-36-34.jpg)
+![](md/Xnip2021-12-11_16-39-45.jpg)
+
+
+
 
