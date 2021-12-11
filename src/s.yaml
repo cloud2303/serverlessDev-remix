@@ -6,6 +6,7 @@ vars: # [全局变量，提供给各个服务使用]
   accountID: '' #阿里云账号id,控制台右上角头像可以看到账户ID 比如 '123456789'
   region: cn-hangzhou
   fc:
+    name: remix-server #函数的名字
     baseUrl: https://${vars.accountID}.cn-hangzhou.fc.aliyuncs.com/2016-08-15/proxy/remix-fc.LATEST/remix-server/ #函数计算触发器地址，可以在部署好函数之后获得。例子 https://<accountID>.cn-hongkong.fc.aliyuncs.com/2016-08-15/proxy/serverlesshub/serverlesshub/
   oss:
     bucketName: remix-static  #oss存储桶的名称确保唯一
@@ -22,7 +23,7 @@ services:
         name: remix-fc
         description: 'remix server'
       function:
-        name: remix-server
+        name: ${vars.fc.name}
         description: 'remix serverside'
         runtime: nodejs14
         codeUri: ./server

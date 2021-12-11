@@ -32,7 +32,7 @@ s config add
 补充s.yaml文件信息
 ![](md/Xnip2021-12-11_17-29-32.jpg)
 
-必填accountID和bucketName，注意bucketName名字要唯一
+必填accountID和bucketName和fc的name，注意bucketName名字要唯一
 
 
 然后执行部署命令，可以看到gateway临时的二级域名(我这里没有添加自定义域名。注意，这个临时的二级域名不可以访问，需要绑定自定义域名)
