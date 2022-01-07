@@ -1,15 +1,31 @@
 {
-  "name": "remix-server",
-  "version": "1.0.0",
+  "name": "remix-app-template",
   "description": "",
-  "main": "index.js",
+  "license": "",
   "scripts": {
-    "postinstall": "npx remix setup",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "remix build",
+    "dev": "remix dev",
+    "postinstall": "remix setup node",
+    "start": "remix-serve build"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "remix-aliyunhttp": "^0.1.4"
-  }
+    "@remix-run/react": "^1.1.1",
+    "@remix-run/serve": "^1.1.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "remix": "^1.1.1",
+    "remix-auth": "^3.1.0",
+    "remix-auth-form": "^1.1.1",
+    "remix-aliyunhttp": "^0.2.3"
+  },
+  "devDependencies": {
+    "@remix-run/dev": "^1.1.1",
+    "@types/react": "^17.0.24",
+    "@types/react-dom": "^17.0.9",
+    "typescript": "^4.1.2"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "sideEffects": false
 }

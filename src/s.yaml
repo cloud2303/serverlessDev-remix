@@ -1,30 +1,37 @@
-edition: 1.0.0          
-name: helloremix     
-access: default  
-vars: # [全局变量，提供给各个服务使用]
+edition: 1.0.0
+name: helloremix
+access: default
+vars:
   #domain: test.test.com 如果你的域名在阿里云这里的注释以及最下面的dns注释
-  accountID: '' #阿里云账号id,控制台右上角头像可以看到账户ID 比如 '123456789'
   region: cn-hangzhou
   fc:
-    name: remix-server #函数的名字
-    baseUrl: '' #函数计算触发器地址，可以在部署好函数之后获得。例子 https://<accountID>.cn-hongkong.fc.aliyuncs.com/2016-08-15/proxy/remix-fc/<函数的名字，如remix-server>/
+    name: remix-fc #函数名字
+    baseUrl:  "" #函数计算触发器地址，可以在部署好函数之后获得。例子： https://xxx.cn-hongkong.fc.aliyuncs.com/2016-08-15/proxy/serverlesshub/serverlesshub/
   oss:
-    bucketName: remix-static  #oss存储桶的名称确保唯一
-    baseUrl: https://${vars.oss.bucketName}.oss-cn-hangzhou.aliyuncs.com  # oss 公网访问地址 。例子： https://<bucketname>.oss-cn-hangzhou.aliyuncs.com
+    bucketName:  "" #oss存储桶的名称确保唯一
+    baseUrl:  "" # oss 公网访问地址 。例子： https://<bucketname>.oss-cn-hangzhou.aliyuncs.com
   gateway:
     groupName: remix # apigateway的分组名称
-  
+  accountId: "" #右上角头像账号id
 services:
   remixfunc:
     component: fc
+    actions:
+      pre-deploy:
+        - run: npm run build
+          path: .
+        - run: cp package.json ./server/package.json
+          path: .
+        - run: npm install
+          path: ./server
     props:
       region: ${vars.region}
       service:
         name: remix-fc
-        description: 'remix server'
+        description: remix server
       function:
         name: ${vars.fc.name}
-        description: 'remix serverside'
+        description: remix serverside
         runtime: nodejs14
         codeUri: ./server
         handler: index.handler
@@ -53,49 +60,40 @@ services:
       region: ${vars.region}
       codeUri: ./public #要上传的文件夹
       acl: public-read
-  gateway: #  服务名称
-      component: apigateway # 这里引入的是相对路径，正式配置替换成你自己的component名称即可
-      props:
-        regionId: ${vars.region}
-        customerDomain: ${vars.domain} # 客户自定义域名
-        groupName: ${vars.gateway.groupName}  #指定分组 这里你可以分开设置环境
-        stageName: RELEASE  
-        apis:
-          - apiName: remix_server # remix服务端api
-            regionId: ${vars.region}
-            requestConfig:
-              requestPath: /*
-              requestHttpMethod: ANY
-            serviceConfig:
-              servicePath: / # 后端路径
-              serviceHttpMethod: POST
-              serviceProtocol: FunctionCompute
-              FunctionComputeConfig: # 函数计算的配置
-                fcRegionId: ${vars.region} # 函数计算region
-                fcType: HttpTrigger
-                FcBaseUrl: ${vars.fc.baseUrl}
-                path: /
-                OnlyBusinessPath: true #只接受路径
-                RoleArn: acs:ram::${vars.accountID}:role/aliyunapigatewayaccessingfcrole
-              resultType: JSON
-          - apiName: remix_static #remix静态资源
-            regionId: ${vars.region}
-            requestConfig:
-              requestPath: /build/*
-              requestHttpMethod: GET
-            serviceConfig:
-              serviceAddress: ${vars.oss.baseUrl}
-              aoneAppName: cloudapi-openapi
-              serviceHttpMethod: ANY
-              serviceProtocol: HTTP
-              servicePath: /build/* # 后端路径 https://remix-public.oss-cn-hangzhou.aliyuncs.com/
-              resultType: JSON
-  # dns:  
-  #   component: dns # 如果你的域名托管在阿里，取消这几行注释
-  #   actions:
-  #     post-deploy:
-  #       - run: s gateway bindDomain  #dns 挂载好 gateway的域名后，需要gateway再绑定一下
-  #         path: ./
-  #   props:
-  #     domainName: ${vars.domain}
-  #     value: ${gateway.output.domain}           
+  gateway:
+    component: apigateway # 这里引入的是相对路径，正式配置替换成你自己的component名称即可
+    props:
+      regionId: ${vars.region}
+      customerDomain: ${vars.domain} # 客户自定义域名
+      groupName: ${vars.gateway.groupName} #指定分组 这里你可以分开设置环境
+      stageName: RELEASE
+      apis:
+        - apiName: remix_server
+          regionId: ${vars.region}
+          requestConfig:
+            requestPath: /*
+            requestHttpMethod: ANY
+          serviceConfig:
+            servicePath: /
+            serviceHttpMethod: POST
+            serviceProtocol: FunctionCompute
+            FunctionComputeConfig:
+              fcRegionId: ${vars.region}
+              fcType: HttpTrigger
+              FcBaseUrl: ${vars.fc.baseUrl}
+              path: /
+              OnlyBusinessPath: true
+              RoleArn: acs:ram::${vars.accountId}:role/aliyunapigatewayaccessingfcrole
+            resultType: JSON
+        - apiName: remix_static
+          regionId: ${vars.region}
+          requestConfig:
+            requestPath: /build/*
+            requestHttpMethod: GET
+          serviceConfig:
+            serviceAddress: ${vars.oss.baseUrl}
+            aoneAppName: cloudapi-openapi
+            serviceHttpMethod: ANY
+            serviceProtocol: HTTP
+            servicePath: /build/*
+            resultType: JSON
