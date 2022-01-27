@@ -1,18 +1,18 @@
 edition: 1.0.0
 name: helloremix
-access: default
+access: remix
 vars:
   #domain: test.test.com 如果你的域名在阿里云这里的注释以及最下面的dns注释
   region: cn-hangzhou
   fc:
     name: remix-fc #函数名字
-    baseUrl:  "" #函数计算触发器地址，可以在部署好函数之后获得。例子： https://xxx.cn-hongkong.fc.aliyuncs.com/2016-08-15/proxy/serverlesshub/serverlesshub/
+    baseUrl: https://1285341159091915.cn-hangzhou.fc.aliyuncs.com/2016-08-15/proxy/remix-fc/remix-fc/ #函数计算触发器地址，可以在部署好函数之后获得。例子： https://xxx.cn-hongkong.fc.aliyuncs.com/2016-08-15/proxy/serverlesshub/serverlesshub/
   oss:
-    bucketName:  "" #oss存储桶的名称确保唯一
-    baseUrl:  "" # oss 公网访问地址 。例子： https://<bucketname>.oss-cn-hangzhou.aliyuncs.com
+    bucketName: remix-static #oss存储桶的名称确保唯一
+    baseUrl: https://remix-static.oss-cn-hangzhou.aliyuncs.com # oss 公网访问地址 。例子： https://<bucketname>.oss-cn-hangzhou.aliyuncs.com
   gateway:
     groupName: remix # apigateway的分组名称
-  accountId: "" #右上角头像账号id
+  accountId: "1285341159091915" #右上角头像账号id
 services:
   remixfunc:
     component: fc
@@ -33,10 +33,13 @@ services:
         name: ${vars.fc.name}
         description: remix serverside
         runtime: nodejs14
+        ossBucket: remix-uploadcode
         codeUri: ./server
         handler: index.handler
         memorySize: 512
         timeout: 60
+        environmentVariables:
+          TOKEN: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDI1NzA5MjUsImR0YWJsZV91dWlkIjoiNmUyODJlYWYtZTFhMS00ZGMzLThkZTYtNGMzNTM1NGVkMTAwIiwidXNlcm5hbWUiOiIiLCJwZXJtaXNzaW9uIjoicnciLCJhcHBfbmFtZSI6Ilx1NmQ0Ylx1OGJkNSJ9.kiOylgwklCfWbKJt9_BllFzU2gYZ1-NIVgelFkjGurQ
       triggers:
         - name: httpTrigger
           type: http
