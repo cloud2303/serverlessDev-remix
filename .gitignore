@@ -3,3 +3,4 @@
 **/build
 .s
 .DS_Store
+.env
