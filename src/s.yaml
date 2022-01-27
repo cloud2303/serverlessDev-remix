@@ -38,8 +38,6 @@ services:
         handler: index.handler
         memorySize: 512
         timeout: 60
-        environmentVariables:
-          TOKEN: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDI1NzA5MjUsImR0YWJsZV91dWlkIjoiNmUyODJlYWYtZTFhMS00ZGMzLThkZTYtNGMzNTM1NGVkMTAwIiwidXNlcm5hbWUiOiIiLCJwZXJtaXNzaW9uIjoicnciLCJhcHBfbmFtZSI6Ilx1NmQ0Ylx1OGJkNSJ9.kiOylgwklCfWbKJt9_BllFzU2gYZ1-NIVgelFkjGurQ
       triggers:
         - name: httpTrigger
           type: http
